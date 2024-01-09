@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back1"
+    tools:context=".ui.fragment.ScreenResult">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="150dp"
+        android:orientation="vertical">
+
+
+        <ImageView
+            android:id="@+id/refreshBtn"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_of_start_btn"
+            android:gravity="center"
+            android:src="@drawable/change_ic"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="300dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/trueAnswerSize"
+
+            android:layout_marginBottom="10dp"
+            android:text="To'g'ri javoblar soni - 0"
+            android:textColor="@color/white"
+            android:textSize="25dp" />
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

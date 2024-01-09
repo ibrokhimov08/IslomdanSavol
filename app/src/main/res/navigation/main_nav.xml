@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/screenSplash">
+
+
+    <fragment
+        android:id="@+id/screenSplash"
+        android:name="uz.ibrokhimov.quizislamic.ui.fragment.ScreenSplash"
+        android:label="screen_start"
+        tools:layout="@layout/screen_splash">
+        <action
+            app:popUpTo="@id/screenSplash"
+            app:popUpToInclusive="true"
+            android:id="@+id/splashToStart"
+            app:destination="@id/screenStart" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/screenGame"
+        android:name="uz.ibrokhimov.quizislamic.ui.fragment.ScreenGame"
+        android:label="screen_game"
+        tools:layout="@layout/screen_game" >
+        <action
+            app:popUpTo="@id/screenGame"
+            app:popUpToInclusive="true"
+            android:id="@+id/gameToResult"
+            app:destination="@id/screenResult" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/screenStart"
+        android:name="uz.ibrokhimov.quizislamic.ui.fragment.ScreenStart"
+        android:label="screen_start"
+        tools:layout="@layout/screen_start" >
+        <action
+            android:id="@+id/screenToGame"
+            app:destination="@id/screenGame" />
+    </fragment>
+    <fragment
+        android:id="@+id/screenResult"
+        android:name="uz.ibrokhimov.quizislamic.ui.fragment.ScreenResult"
+        android:label="screen_result"
+        tools:layout="@layout/screen_result" >
+
+        <action
+            app:popUpTo="@id/screenResult"
+            app:popUpToInclusive="true"
+            android:id="@+id/action_screenResult_to_screenStart"
+            app:destination="@id/screenStart" />
+        <argument
+            android:name="trueAnswer"
+            app:argType="integer" />
+    </fragment>
+
+
+</navigation>
