@@ -6,7 +6,6 @@ import android.os.Handler
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.forEachIndexed
 import androidx.navigation.fragment.findNavController
 import uz.ibrokhimov.quizislamic.R
@@ -15,7 +14,6 @@ import uz.ibrokhimov.quizislamic.core.data.QuestionData
 import uz.ibrokhimov.quizislamic.core.dialog.Dialog
 import uz.ibrokhimov.quizislamic.core.dialog.HelpDialog
 import uz.ibrokhimov.quizislamic.databinding.ScreenGameBinding
-import java.lang.String
 import kotlin.Long
 import kotlin.getValue
 import kotlin.lazy
@@ -41,6 +39,8 @@ class ScreenGame : BaseFragment() {
     override fun onCreated() {
         loadView()
         loadAction()
+        //callback
+
     }
 
     private fun loadAction() {
@@ -69,8 +69,6 @@ class ScreenGame : BaseFragment() {
                             },
                             2000
                         )
-                        counter = 60_000.0
-                        timerCountDownTimer = 60
                     } else {
                         isChecked = false
                         falseAnswerCount++
@@ -88,9 +86,8 @@ class ScreenGame : BaseFragment() {
                             },
                             2_000
                         )
-                        timerCountDownTimer = 60
-                        counter = 60_000.0
                     }
+                    timer.cancel()
                 }
             }
         }
@@ -119,8 +116,7 @@ class ScreenGame : BaseFragment() {
                 var trueId = 0
                 val trueAnswer = data[position].javob
                 binding.answerGroup.forEachIndexed { i, _ ->
-                    val answers = binding.answerGroup.getChildAt(i) as TextView
-                    if (trueAnswer == answers.text.toString()) {
+                    if (trueAnswer == data[position].javoblar[i]) {
                         trueId = i
                     }
                 }
@@ -164,8 +160,7 @@ class ScreenGame : BaseFragment() {
                 var trueId = 0
                 val trueAnswer = data[position].javob
                 binding.answerGroup.forEachIndexed { i, _ ->
-                    val answers = binding.answerGroup.getChildAt(i) as TextView
-                    if (trueAnswer == answers.text.toString()) {
+                    if (trueAnswer == data[position].javoblar[i]) {
                         trueId = i
                     }
                 }
@@ -214,8 +209,7 @@ class ScreenGame : BaseFragment() {
                 var trueId = 0
                 val trueAnswer = data[position].javob
                 binding.answerGroup.forEachIndexed { i, _ ->
-                    val answers = binding.answerGroup.getChildAt(i) as TextView
-                    if (trueAnswer == answers.text.toString()) {
+                    if (trueAnswer == data[position].javoblar[i]) {
                         trueId = i
                     }
                 }
@@ -256,11 +250,12 @@ class ScreenGame : BaseFragment() {
     }
 
     private fun loadView() {
-
+        timerCountDownTimer = 60
+        counter = 60_000.0
 
         timer = object : CountDownTimer(counter.toLong(), 1_000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.time.text = "Vaqt: ${String.valueOf(timerCountDownTimer)}"
+                binding.time.text = "Vaqt: $timerCountDownTimer"
                 timerCountDownTimer--
             }
 
@@ -292,16 +287,25 @@ class ScreenGame : BaseFragment() {
         binding.questionCount.text = "Savol: ${position + 1}/$questionSize"
     }
 
-    override fun onStop() {
-        super.onStop()
 
-        AlertDialog.Builder(requireContext())
-            .setTitle("Do you want to exit!?")
-            .setPositiveButton("Ha",{i,_->
+    override fun onDetach() {
+        /*AlertDialog.Builder(requireContext())
+            .setTitle("Chiqish")
+            .setMessage("O'yindan chiqishni hohlaysizmi?")
+            .setNegativeButton("Ha") { d, _ ->
+                findNavController().popBackStack()
+                isBack = true
+                d.dismiss()
+            }
+            .setPositiveButton("Yo'q") { d, _ ->
+                d.dismiss()
+            }
+            .show()
 
-            })
-            .setNegativeButton("Yo'q",{d})
-
+        myToast("Stop button is touched")*/
+            super.onDetach()
+        timer.cancel()
     }
+
 
 }
