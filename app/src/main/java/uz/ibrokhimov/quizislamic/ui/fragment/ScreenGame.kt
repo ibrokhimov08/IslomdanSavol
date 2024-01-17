@@ -11,17 +11,16 @@ import androidx.navigation.fragment.findNavController
 import uz.ibrokhimov.quizislamic.R
 import uz.ibrokhimov.quizislamic.core.base.BaseFragment
 import uz.ibrokhimov.quizislamic.core.data.QuestionData
-import uz.ibrokhimov.quizislamic.core.dialog.Dialog
+import uz.ibrokhimov.quizislamic.core.dialog.FriendDialog
 import uz.ibrokhimov.quizislamic.core.dialog.HelpDialog
+import uz.ibrokhimov.quizislamic.core.dialog.LoseDialog
 import uz.ibrokhimov.quizislamic.databinding.ScreenGameBinding
-import kotlin.Long
-import kotlin.getValue
-import kotlin.lazy
 
 class ScreenGame : BaseFragment() {
     private lateinit var timer: CountDownTimer
     private val binding by lazy { ScreenGameBinding.inflate(layoutInflater) }
     private var position = 0
+    private var trueAnswerPosition = 0
     private val data = QuestionData.getData()
     private var coin = 0
     private var timerCountDownTimer = 60
@@ -39,8 +38,6 @@ class ScreenGame : BaseFragment() {
     override fun onCreated() {
         loadView()
         loadAction()
-        //callback
-
     }
 
     private fun loadAction() {
@@ -52,6 +49,7 @@ class ScreenGame : BaseFragment() {
             textView.setOnClickListener {
                 if (isChecked) {
                     if (data[position].javoblar[i] == data[position].javob) {
+                        trueAnswerPosition = i
                         trueAnswerCount++
                         isChecked = false
                         textView.setBackgroundResource(R.drawable.shape_of_start_btn)
@@ -79,15 +77,40 @@ class ScreenGame : BaseFragment() {
                             },
                             1_000
                         )
+
+                        Handler().postDelayed({
+                            (binding.answerGroup.getChildAt(trueAnswerPosition) as TextView).setBackgroundResource(
+                                R.drawable.shape_of_true
+                            )
+                        }, 2_000)
+
                         Handler().postDelayed(
                             {
-                                positionIncrement()
-                                loadView()
+                                timer.cancel()
+                                val loseDialog =
+                                    LoseDialog(
+                                        requireContext(),
+                                        this.findNavController(),
+                                        trueAnswerCount
+                                    )
+                                loseDialog.show()
+                                loseDialog.onClickOut = {
+                                    if (it) {
+                                        loseDialog.cancel()
+                                    }
+                                }
+                                loseDialog.onClickRestart = {
+                                    if (it) {
+                                        position = 0
+                                        data.shuffle()
+                                        loadView()
+                                        loseDialog.cancel()
+                                    }
+                                }
                             },
-                            2_000
+                                3_000
                         )
                     }
-                    timer.cancel()
                 }
             }
         }
@@ -223,7 +246,7 @@ class ScreenGame : BaseFragment() {
                     }
                     coin -= 15
                     binding.winCoin.text = "Yutuq: $coin"
-                    Dialog(context = requireContext(), javob).show()
+                    FriendDialog(context = requireContext(), javob).show()
                 } else {
                     Toast.makeText(
                         requireContext(),
@@ -237,8 +260,8 @@ class ScreenGame : BaseFragment() {
         binding.helpBtn.setOnClickListener {
             HelpDialog(requireContext()).show()
         }
-
     }
+
 
     private fun positionIncrement() {
         if (position < questionSize) position++
@@ -303,9 +326,7 @@ class ScreenGame : BaseFragment() {
             .show()
 
         myToast("Stop button is touched")*/
-            super.onDetach()
+        super.onDetach()
         timer.cancel()
     }
-
-
 }
