@@ -16,7 +16,6 @@ class ScreenStart :BaseFragment() {
 
     override fun onCreated() {
         loadAction()
-
     }
 
     private fun loadAction() {

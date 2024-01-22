@@ -1,8 +1,10 @@
 package uz.ibrokhimov.quizislamic.ui.fragment
 
 import android.content.pm.ActivityInfo
+import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.os.Handler
+import android.provider.MediaStore.Video.Media
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -23,6 +25,7 @@ class ScreenGame : BaseFragment() {
     private var trueAnswerPosition = 0
     private val data = QuestionData.getData()
     private var coin = 0
+    private var systemMusic: MediaPlayer? = null
     private var timerCountDownTimer = 60
     private var counter = 60_000.0
     private var trueAnswerCount = 0
@@ -36,9 +39,19 @@ class ScreenGame : BaseFragment() {
     }
 
     override fun onCreated() {
+
         loadView()
+        loadMusic()
         loadAction()
+        systemMusic!!.start()
     }
+
+    private fun loadMusic() {
+
+        systemMusic = MediaPlayer.create(requireContext(), R.raw.system_music)
+
+    }
+
 
     private fun loadAction() {
 
@@ -79,7 +92,7 @@ class ScreenGame : BaseFragment() {
                         )
 
                         Handler().postDelayed({
-                            (binding.answerGroup.getChildAt(trueAnswerPosition) as TextView).setBackgroundResource(
+                            (binding.answerGroup.getChildAt(getTrueAnswerId()) as TextView).setBackgroundResource(
                                 R.drawable.shape_of_true
                             )
                         }, 2_000)
@@ -108,11 +121,13 @@ class ScreenGame : BaseFragment() {
                                     }
                                 }
                             },
-                                3_000
+                            3_000
                         )
                     }
                 }
+                timer.cancel()
             }
+
         }
 
         binding.changeQuestion.setOnClickListener {
@@ -134,7 +149,7 @@ class ScreenGame : BaseFragment() {
         }
 
         binding.halfBtn.setOnClickListener {
-            binding.winCoin.text = "Yutuq:$coin"
+            binding.winCoin.text = "Yutuq: $coin"
             if (isChecked) {
                 var trueId = 0
                 val trueAnswer = data[position].javob
@@ -310,6 +325,20 @@ class ScreenGame : BaseFragment() {
         binding.questionCount.text = "Savol: ${position + 1}/$questionSize"
     }
 
+    fun getTrueAnswerId(): Int {
+        var trueAnswer = 0
+
+        for (i in 0..3) {
+
+            if (data[position].javoblar[i] == data[position].javob) {
+                trueAnswer = i
+            }
+
+        }
+
+        return trueAnswer
+
+    }
 
     override fun onDetach() {
         /*AlertDialog.Builder(requireContext())
