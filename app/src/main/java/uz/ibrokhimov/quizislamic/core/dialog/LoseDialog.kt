@@ -3,14 +3,14 @@ package uz.ibrokhimov.quizislamic.core.dialog
 import android.app.Dialog
 import android.content.Context
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import uz.ibrokhimov.quizislamic.databinding.LoseDialogBinding
 
-class LoseDialog(context: Context, private val nav: NavController, val trueAnswer:Int) : Dialog(context, false, null) {
+class LoseDialog(context: Context, private val nav: NavController, val trueAnswer: Int) :
+    Dialog(context, false, null) {
 
     private val binding by lazy { LoseDialogBinding.inflate(layoutInflater) }
-    var onClickRestart: ((isRestarted :Boolean) -> Unit)? = null
-    var onClickOut: ((isBacked :Boolean) -> Unit)? = null
+    var onClickRestart: ((isRestarted: Boolean) -> Unit)? = null
+    var onClickOut: ((isBacked: Boolean) -> Unit)? = null
 
     init {
         setContentView(binding.root)
@@ -35,8 +35,6 @@ class LoseDialog(context: Context, private val nav: NavController, val trueAnswe
             onClickRestart?.invoke(true)
         }
     }
-
-
 
 
 }

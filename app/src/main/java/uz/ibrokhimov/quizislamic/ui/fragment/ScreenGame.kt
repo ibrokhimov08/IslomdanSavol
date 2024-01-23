@@ -4,7 +4,6 @@ import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.os.Handler
-import android.provider.MediaStore.Video.Media
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -25,7 +24,9 @@ class ScreenGame : BaseFragment() {
     private var trueAnswerPosition = 0
     private val data = QuestionData.getData()
     private var coin = 0
-    private var systemMusic: MediaPlayer? = null
+    private var itemSelectMusic: MediaPlayer? = null
+    private var itemTrueMusic: MediaPlayer? = null
+    private var itemFalseMusic: MediaPlayer? = null
     private var timerCountDownTimer = 60
     private var counter = 60_000.0
     private var trueAnswerCount = 0
@@ -39,17 +40,16 @@ class ScreenGame : BaseFragment() {
     }
 
     override fun onCreated() {
-
+        data.shuffle()
         loadView()
-        loadMusic()
         loadAction()
-        systemMusic!!.start()
+        loadMusic()
     }
 
     private fun loadMusic() {
-
-        systemMusic = MediaPlayer.create(requireContext(), R.raw.system_music)
-
+        itemSelectMusic = MediaPlayer.create(requireContext(), R.raw.select_answer)
+        itemTrueMusic = MediaPlayer.create(requireContext(), R.raw.true_answer)
+        itemFalseMusic = MediaPlayer.create(requireContext(), R.raw.false_answer)
     }
 
 
@@ -66,9 +66,11 @@ class ScreenGame : BaseFragment() {
                         trueAnswerCount++
                         isChecked = false
                         textView.setBackgroundResource(R.drawable.shape_of_start_btn)
+                        itemSelectMusic!!.start()
                         Handler().postDelayed(
                             {
                                 textView.setBackgroundResource(R.drawable.shape_of_true)
+                                itemTrueMusic!!.start()
                             },
                             1_000
                         )
@@ -84,9 +86,11 @@ class ScreenGame : BaseFragment() {
                         isChecked = false
                         falseAnswerCount++
                         textView.setBackgroundResource(R.drawable.shape_of_start_btn)
+                        itemSelectMusic!!.start()
                         Handler().postDelayed(
                             {
                                 textView.setBackgroundResource(R.drawable.shape_of_false)
+                                itemFalseMusic!!.start()
                             },
                             1_000
                         )
@@ -329,32 +333,14 @@ class ScreenGame : BaseFragment() {
         var trueAnswer = 0
 
         for (i in 0..3) {
-
             if (data[position].javoblar[i] == data[position].javob) {
                 trueAnswer = i
             }
-
         }
-
         return trueAnswer
-
     }
 
     override fun onDetach() {
-        /*AlertDialog.Builder(requireContext())
-            .setTitle("Chiqish")
-            .setMessage("O'yindan chiqishni hohlaysizmi?")
-            .setNegativeButton("Ha") { d, _ ->
-                findNavController().popBackStack()
-                isBack = true
-                d.dismiss()
-            }
-            .setPositiveButton("Yo'q") { d, _ ->
-                d.dismiss()
-            }
-            .show()
-
-        myToast("Stop button is touched")*/
         super.onDetach()
         timer.cancel()
     }

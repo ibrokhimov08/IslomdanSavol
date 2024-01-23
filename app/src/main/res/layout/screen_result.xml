@@ -22,8 +22,8 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_of_start_btn"
             android:gravity="center"
-            android:src="@drawable/change_ic"
             android:padding="5dp"
+            android:src="@drawable/change_ic"
             android:textColor="@color/white"
             android:textSize="30sp" />
     </LinearLayout>
@@ -37,15 +37,14 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/trueAnswerSize"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/trueAnswerSize"
 
             android:layout_marginBottom="10dp"
             android:text="To'g'ri javoblar soni - 0"
             android:textColor="@color/white"
             android:textSize="25dp" />
-
 
 
     </LinearLayout>

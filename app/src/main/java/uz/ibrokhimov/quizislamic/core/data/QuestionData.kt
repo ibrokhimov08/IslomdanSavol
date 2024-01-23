@@ -5,7 +5,6 @@ import uz.ibrokhimov.quizislamic.core.model.SavolModel
 class QuestionData {
 
 
-
     companion object {
         private val data = getAllData()
 
@@ -427,6 +426,7 @@ class QuestionData {
             data.shuffle()
             return data
         }
+
         fun getData() = data
     }
 

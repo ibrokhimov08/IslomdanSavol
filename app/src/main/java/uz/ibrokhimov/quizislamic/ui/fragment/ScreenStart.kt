@@ -5,8 +5,9 @@ import android.view.View
 import androidx.navigation.fragment.findNavController
 import uz.ibrokhimov.quizislamic.core.base.BaseFragment
 import uz.ibrokhimov.quizislamic.databinding.ScreenStartBinding
+import uz.ibrokhimov.quizislamic.ui.main.MainActivity
 
-class ScreenStart :BaseFragment() {
+class ScreenStart : BaseFragment() {
     private val binding by lazy { ScreenStartBinding.inflate(layoutInflater) }
 
     override fun onCreate(): View {
@@ -20,13 +21,23 @@ class ScreenStart :BaseFragment() {
 
     private fun loadAction() {
 
-        binding.startBtn.setOnClickListener{
+        binding.startBtn.setOnClickListener {
             findNavController().navigate(ScreenStartDirections.screenToGame())
         }
 
-        binding.exitBtn.setOnClickListener{
+        binding.exitBtn.setOnClickListener {
             requireActivity().finish()
         }
 
+
+        binding.switchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (!isChecked) {
+                MainActivity.turnOffMusic()
+                buttonView.text = "Tovushni yoqish"
+            } else {
+                MainActivity.turnOnMusic()
+                buttonView.text = "Tovushni o'chirish"
+            }
+        }
     }
 }

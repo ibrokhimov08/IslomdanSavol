@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import uz.ibrokhimov.quizislamic.databinding.ItemHelpBinding
 
-class HelpDialog(context: Context):Dialog(context) {
+class HelpDialog(context: Context) : Dialog(context) {
 
     private val binding by lazy { ItemHelpBinding.inflate(layoutInflater) }
 
