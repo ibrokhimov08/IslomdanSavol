@@ -101,6 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"
+            android:weightSum="5"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/answerGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,46 +110,34 @@
 
             <ImageView
                 android:id="@+id/changeQuestion"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="15dp"
+                android:layout_weight="1"
+                style="@style/focus"
                 android:src="@drawable/change_ic" />
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/halfBtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/half_ic" />
+                android:src="@drawable/half_ic"
+                style="@style/focus" />
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/eye_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="20dp"
+                style="@style/focus"
                 android:src="@drawable/eye_ic" />
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/friend_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="20dp"
+                style="@style/focus"
                 android:src="@drawable/friend" />
 
             <ImageView
                 android:id="@+id/help_btn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="20dp"
+                android:layout_weight="1"
+                style="@style/focus"
                 android:src="@drawable/opportunity" />
 
         </LinearLayout>

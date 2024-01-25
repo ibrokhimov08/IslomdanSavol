@@ -127,6 +127,7 @@ class ScreenGame : BaseFragment() {
                             },
                             3_000
                         )
+                        coin = 0
                     }
                 }
                 timer.cancel()
@@ -316,7 +317,6 @@ class ScreenGame : BaseFragment() {
             binding.answerGroup.getChildAt(i).setBackgroundResource(R.drawable.shape_of_bar)
             val child = binding.answerGroup.getChildAt(i) as TextView
 
-
             when (i) {
                 0 -> child.text = "A: " + data[position].javoblar[i]
                 1 -> child.text = "B: " + data[position].javoblar[i]
@@ -325,7 +325,7 @@ class ScreenGame : BaseFragment() {
             }
 
         }
-        binding.winCoin.text = "Yutuq:$coin"
+        binding.winCoin.text = "Yutuq: $coin"
         binding.questionCount.text = "Savol: ${position + 1}/$questionSize"
     }
 
