@@ -5,6 +5,7 @@ import android.media.MediaPlayer
 import android.os.CountDownTimer
 import android.os.Handler
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.forEachIndexed
@@ -19,7 +20,7 @@ import uz.ibrokhimov.quizislamic.databinding.ScreenGameBinding
 
 class ScreenGame : BaseFragment() {
     private lateinit var timer: CountDownTimer
-    private val binding by lazy { ScreenGameBinding.inflate(layoutInflater) }
+    private val binding = ScreenGameBinding.inflate(layoutInflater)
     private var position = 0
     private var trueAnswerPosition = 0
     private val data = QuestionData.getData()
@@ -39,6 +40,7 @@ class ScreenGame : BaseFragment() {
         return binding.root
     }
 
+
     override fun onCreated() {
         data.shuffle()
         loadView()
@@ -55,8 +57,13 @@ class ScreenGame : BaseFragment() {
 
     private fun loadAction() {
 
-        binding.answerGroup.forEachIndexed { i, _ ->
 
+        val trueAnimation = AnimationUtils.loadAnimation(context, R.anim.true_answer_anim)
+        val falseAnimation = AnimationUtils.loadAnimation(context, R.anim.false_answer_anim)
+
+
+
+        binding.answerGroup.forEachIndexed { i, _ ->
             val textView = binding.answerGroup.getChildAt(i) as TextView
 
             textView.setOnClickListener {
@@ -74,6 +81,9 @@ class ScreenGame : BaseFragment() {
                             },
                             1_000
                         )
+
+                        binding.answerGroup.getChildAt(i).startAnimation(trueAnimation)
+
                         Handler().postDelayed(
                             {
                                 positionIncrement()
@@ -91,14 +101,18 @@ class ScreenGame : BaseFragment() {
                             {
                                 textView.setBackgroundResource(R.drawable.shape_of_false)
                                 itemFalseMusic!!.start()
+                                textView.startAnimation(falseAnimation)
                             },
                             1_000
                         )
 
                         Handler().postDelayed({
-                            (binding.answerGroup.getChildAt(getTrueAnswerId()) as TextView).setBackgroundResource(
-                                R.drawable.shape_of_true
-                            )
+                            val trueAnswer =
+                                (binding.answerGroup.getChildAt(getTrueAnswerId()) as TextView)
+
+                            trueAnswer.setBackgroundResource(R.drawable.shape_of_true)
+                            trueAnswer.startAnimation(trueAnimation)
+
                         }, 2_000)
 
                         Handler().postDelayed(
@@ -131,7 +145,9 @@ class ScreenGame : BaseFragment() {
                     }
                 }
                 timer.cancel()
+
             }
+
 
         }
 
@@ -307,6 +323,8 @@ class ScreenGame : BaseFragment() {
             }
         }.start()
 
+
+
         isChecked = true
         binding.answerGroup.forEachIndexed { i, _ ->
             val textView = binding.answerGroup.getChildAt(i) as TextView
@@ -318,6 +336,7 @@ class ScreenGame : BaseFragment() {
             val child = binding.answerGroup.getChildAt(i) as TextView
 
             when (i) {
+
                 0 -> child.text = "A: " + data[position].javoblar[i]
                 1 -> child.text = "B: " + data[position].javoblar[i]
                 2 -> child.text = "C: " + data[position].javoblar[i]
@@ -331,6 +350,7 @@ class ScreenGame : BaseFragment() {
 
     fun getTrueAnswerId(): Int {
         var trueAnswer = 0
+
 
         for (i in 0..3) {
             if (data[position].javoblar[i] == data[position].javob) {

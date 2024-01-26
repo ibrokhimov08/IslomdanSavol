@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back1"
     tools:context=".ui.fragment.ScreenStart">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/back1"
+        android:scaleType="centerCrop"
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/startBtn"
@@ -46,6 +51,11 @@
         android:id="@+id/switchBtn"
         android:layout_width="0dp"
         android:layout_height="21dp"
+        android:outlineAmbientShadowColor="@color/white"
+        android:outlineSpotShadowColor="@color/white"
+        android:shadowColor="@color/white"
+        android:focusedSearchResultHighlightColor="@color/white"
+        android:searchResultHighlightColor="@color/white"
         android:layout_gravity="center"
         android:layout_margin="20sp"
         android:checked="true"
