@@ -13,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         systemMusic = MediaPlayer.create(this, R.raw.system_music)
         systemMusic!!.start()
+
     }
 
     override fun onDestroy() {

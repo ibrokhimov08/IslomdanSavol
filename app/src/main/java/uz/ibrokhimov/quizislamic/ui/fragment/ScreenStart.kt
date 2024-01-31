@@ -11,7 +11,6 @@ class ScreenStart : BaseFragment() {
     private val binding by lazy { ScreenStartBinding.inflate(layoutInflater) }
 
     override fun onCreate(): View {
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         return binding.root
     }
 

@@ -9,7 +9,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:src="@drawable/back1"
+        android:src="@drawable/background_start"
         android:scaleType="centerCrop"
         android:layout_height="match_parent"/>
 
@@ -36,7 +36,7 @@
         android:layout_height="70dp"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/shape_of_start_btn"
+        android:background="@drawable/shape_of_leave"
         android:gravity="center"
         android:padding="10dp"
         android:text="Chiqish"

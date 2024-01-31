@@ -20,7 +20,7 @@ import uz.ibrokhimov.quizislamic.databinding.ScreenGameBinding
 
 class ScreenGame : BaseFragment() {
     private lateinit var timer: CountDownTimer
-    private val binding = ScreenGameBinding.inflate(layoutInflater)
+    private val binding by lazy { ScreenGameBinding.inflate(layoutInflater) }
     private var position = 0
     private var trueAnswerPosition = 0
     private val data = QuestionData.getData()
@@ -36,7 +36,6 @@ class ScreenGame : BaseFragment() {
     private var isChecked = true
 
     override fun onCreate(): View {
-        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         return binding.root
     }
 
@@ -60,8 +59,6 @@ class ScreenGame : BaseFragment() {
 
         val trueAnimation = AnimationUtils.loadAnimation(context, R.anim.true_answer_anim)
         val falseAnimation = AnimationUtils.loadAnimation(context, R.anim.false_answer_anim)
-
-
 
         binding.answerGroup.forEachIndexed { i, _ ->
             val textView = binding.answerGroup.getChildAt(i) as TextView
@@ -348,10 +345,8 @@ class ScreenGame : BaseFragment() {
         binding.questionCount.text = "Savol: ${position + 1}/$questionSize"
     }
 
-    fun getTrueAnswerId(): Int {
+    private fun getTrueAnswerId(): Int {
         var trueAnswer = 0
-
-
         for (i in 0..3) {
             if (data[position].javoblar[i] == data[position].javob) {
                 trueAnswer = i
